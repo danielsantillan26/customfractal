@@ -2,8 +2,16 @@ package fractal;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.ImageObserver;
+import java.text.AttributedCharacterIterator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -37,8 +45,7 @@ public class RunMyFractal {
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		JPanel drawingPanel = new JPanel();
-		drawingPanel.setBackground(Color.BLACK);
+		DrawingPanel drawingPanel = new DrawingPanel();
 		
 		JButton drawButton = new JButton("Draw!");
 		JButton clearButton = new JButton("Clear");
@@ -71,13 +78,32 @@ public class RunMyFractal {
 					JOptionPane.showMessageDialog(null, "Maximum edge side is too large ... your device may not show the entire shape.",
 							"Failed to Run", JOptionPane.ERROR_MESSAGE);
 					return;
+				} else if (timerPause > 2000) {
+					JOptionPane.showMessageDialog(null, "lol i get you want to wait but i don't want to destroy your pc.",
+							"Failed to Run", JOptionPane.ERROR_MESSAGE);
 				}
 				
 				width = 1000 + 3*(maxEdgeSize-200);
-				height = 900 + 2*(maxEdgeSize-200);
+				height = 900 + (maxEdgeSize-200);
 				availableWidth = 700 + 3*(maxEdgeSize-200);
 				frame.setSize(width, height);
 				
+				MyPolygon polygon = new MyPolygon(numSides, maxEdgeSize, availableWidth, height);
+				
+				if (isShapeDrawn) {
+
+					drawingPanel.paintBaseShape(drawingPanel.getGraphics(), polygon.getEdges(), timerPause);
+				}
+				
+			}
+			
+		});
+		
+		clearButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				drawingPanel.clear(drawingPanel.getGraphics());
 			}
 			
 		});
