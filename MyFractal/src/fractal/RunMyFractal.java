@@ -19,6 +19,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingWorker;
 
 public class RunMyFractal {
 	
@@ -89,12 +90,17 @@ public class RunMyFractal {
 				frame.setSize(width, height);
 				
 				MyPolygon polygon = new MyPolygon(numSides, maxEdgeSize, availableWidth, height);
+				Fractal fractal = new Fractal(polygon.getEdges(), minEdgeSize);
 				
+				drawingPanel.clear(drawingPanel.getGraphics());
 				if (isShapeDrawn) {
-
-					drawingPanel.paintBaseShape(drawingPanel.getGraphics(), polygon.getEdges(), timerPause);
+					drawingPanel.paintShape(drawingPanel.getGraphics(), polygon.getEdges(), timerPause);
 				}
 				
+				if (isFractalDrawn) {
+					createSwingWorker(drawingPanel, fractal, timerPause, drawButton);
+				}
+
 			}
 			
 		});
@@ -113,6 +119,27 @@ public class RunMyFractal {
 		
 		frame.setVisible(true);
 	}
+	
+	
+	public void createSwingWorker(DrawingPanel drawingPanel, Fractal fractal, int timerPause, JButton button) {
+		SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+
+			@Override
+			protected Void doInBackground() throws Exception {
+				drawingPanel.paintFractalShape(drawingPanel.getGraphics(), fractal.drawFractal(), timerPause);
+				return null;
+			}
+
+			@Override
+			protected void done() {
+				button.setEnabled(true);
+			}
+		};
+		
+		button.setEnabled(false);
+		worker.execute();
+	}
+	
 	
 	
 	public static void main(String[]args) {

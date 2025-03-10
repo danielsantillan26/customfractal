@@ -7,14 +7,16 @@ public class Edge {
 	private int startingY;
 	private int endingX;
 	private int endingY;
+	private int angle;
 	
 	
-	public Edge(int length, int startingX, int startingY, int endingX, int endingY) {
+	public Edge(int length, int startingX, int startingY, int endingX, int endingY, int angle) {
 		this.length = length;
 		this.startingX = startingX;
 		this.startingY = startingY;
 		this.endingX = endingX;
 		this.endingY = endingY;
+		this.angle = angle;
 	}
 
 
@@ -40,6 +42,11 @@ public class Edge {
 
 	public int getEndingY() {
 		return endingY;
+	}
+	
+	
+	public int getAngle() {
+		return angle;
 	}
 
 	

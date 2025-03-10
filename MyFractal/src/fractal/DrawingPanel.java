@@ -3,6 +3,7 @@ package fractal;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.swing.JPanel;
 
@@ -21,7 +22,7 @@ public class DrawingPanel extends JPanel {
 	}
 	
 	
-	public void paintBaseShape(Graphics g, ArrayList<Edge> edges, int timerPause) {
+	public void paintShape(Graphics g, ArrayList<Edge> edges, int timerPause) {
 		for (Edge edge : edges) {
 			int colorChoice = (int)(Math.random()*11);
 			switch (colorChoice) {
@@ -66,6 +67,12 @@ public class DrawingPanel extends JPanel {
 				
 			}
 		}
+	}
+	
+	
+	public void paintFractalShape(Graphics g, ArrayList<Edge> edges, int timerPause) {
+		Collections.reverse(edges);
+		paintShape(g, edges, timerPause);
 	}
 	
 	
