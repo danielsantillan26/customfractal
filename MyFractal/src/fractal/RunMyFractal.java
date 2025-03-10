@@ -1,39 +1,58 @@
 package fractal;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.ImageObserver;
-import java.text.AttributedCharacterIterator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.SwingWorker;
 
+
+/**
+ * The RunMyFractal class runs the program that draws my custom fractal. This
+ * includes code that reads in values from the information panel to draw the
+ * fractal along with a swing worker to run the recursive drawing in a separate
+ * thread.
+ * 
+ * @author Daniel Santillan
+ * @version 1.0
+ */
 public class RunMyFractal {
 	
-	private static final long serialVersionUID = 1L;
+	/** The width of the frame */
 	private int width;
+	/** The height of the frame */
 	private int height;
+	/** 
+	 * The available width to use for drawing the fractal - this is the width
+	 * minus several hundred pixels to account for the information panel on
+	 * the right side.
+	 */
 	private int availableWidth;
 	
 
+	/**
+	 * The runMyFractal constructor calls a method that creates the frame for
+	 * the program. This is called at the start of the program.
+	 */
 	public RunMyFractal() {
 		createFrame(1000, 900);
 	}
 	
 	
+	/**
+	 * The createFrame method builds the frame for the program. It assigns
+	 * initial attributes to the frame, such as the icon, close operation, etc.
+	 * It also creates buttons and adds action listeners to them to be added
+	 * into the information panel. Lastly, the information and drawing panels
+	 * are appended to the frame, which is set visible.
+	 * 
+	 * @param givenWidth the given width
+	 * @param givenHeight the given height
+	 */
 	private void createFrame(int givenWidth, int givenHeight) {
 		width = givenWidth;
 		height = givenHeight;
@@ -54,6 +73,18 @@ public class RunMyFractal {
 		
 		drawButton.addActionListener(new ActionListener() {
 
+			/**
+			 * The action listener for the "draw" button begins work to draw
+			 * the fractal. It makes sure that input values from the information
+			 * panel are within limits, otherwise executing a JOptionPane message
+			 * dialog. If all values are good, a polygon is created with the
+			 * given side count and max edge size. Additionally, a fractal
+			 * is made using the polygon. If the user checks off the boxes to
+			 * draw the shape and the fractal, both the shape and the fractal
+			 * will be drawn.
+			 * 
+			 * @param e the ActionEvent triggering the method
+			 */
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int numSides = infoPanel.getNumSides();
@@ -82,6 +113,7 @@ public class RunMyFractal {
 				} else if (timerPause > 2000) {
 					JOptionPane.showMessageDialog(null, "lol i get you want to wait but i don't want to destroy your pc.",
 							"Failed to Run", JOptionPane.ERROR_MESSAGE);
+					return;
 				}
 				
 				width = 1000 + 3*(maxEdgeSize-200);
@@ -107,6 +139,12 @@ public class RunMyFractal {
 		
 		clearButton.addActionListener(new ActionListener() {
 
+			/**
+			 * The action listener for the "clear" button acts as an eraser
+			 * that removes any previous fractal from the screen.
+			 * 
+			 * @param e the ActionEvent triggering the method
+			 */
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				drawingPanel.clear(drawingPanel.getGraphics());
@@ -121,15 +159,35 @@ public class RunMyFractal {
 	}
 	
 	
+	/**
+	 * The createSwingWorker method creates a swing worker to run the drawing
+	 * of the fractal in a background thread, thus allowing users to work with
+	 * the information panel while the fractal process is running. While the
+	 * process runs, the "draw" button cannot be pressed.
+	 * 
+	 * @param drawingPanel the DrawingPanel to be used
+	 * @param fractal the fractal to be drawn
+	 * @param timerPause the pause between lines drawn on the fractal
+	 * @param button the JButton that triggers the fractal to be drawn
+	 */
 	public void createSwingWorker(DrawingPanel drawingPanel, Fractal fractal, int timerPause, JButton button) {
 		SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
 
+			/**
+			 * The doInBackground method contains the method to draw the
+			 * fractal, which is done in this background thread. 
+			 * 
+			 * @throws Exception simple exception
+			 */
 			@Override
 			protected Void doInBackground() throws Exception {
 				drawingPanel.paintFractalShape(drawingPanel.getGraphics(), fractal.drawFractal(), timerPause);
 				return null;
 			}
 
+			/**
+			 * The done method allows the draw button to be pressed again.
+			 */
 			@Override
 			protected void done() {
 				button.setEnabled(true);
@@ -141,9 +199,25 @@ public class RunMyFractal {
 	}
 	
 	
-	
+	/**
+	 * The main method calls the RunMyFractal constructor, which creates
+	 * the frame for the program.
+	 * 
+	 * @param args The main method arguments
+	 */
 	public static void main(String[]args) {
 		new RunMyFractal();
+	}
+
+
+	/**
+	 * This is a simple toString that returns the field values for this class.
+	 * 
+	 * @return the field values for this class
+	 */
+	@Override
+	public String toString() {
+		return "RunMyFractal [width=" + width + ", height=" + height + ", availableWidth=" + availableWidth + "]";
 	}
 	
 }

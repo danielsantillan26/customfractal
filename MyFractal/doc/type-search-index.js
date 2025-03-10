@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"fractal","l":"DrawingPanel"},{"p":"fractal","l":"Edge"},{"p":"fractal","l":"Fractal"},{"p":"fractal","l":"InformationPanel"},{"p":"fractal","l":"MyPolygon"},{"p":"fractal","l":"RunMyFractal"}];updateSearchResults();

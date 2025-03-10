@@ -12,17 +12,40 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ * The InformationPanel class creates the information panel that allows users
+ * to enter input for how they want the fractal to look.
+ * 
+ * @author Daniel Santillan
+ * @version 1.0
+ */
 public class InformationPanel extends JPanel {
 	
+	/** Version */
 	private static final long serialVersionUID = 1L;
+	/** The JTextfield that holds input for the number of sides */
 	private JTextField numSidesInput;
+	/** The JTextfield that holds input for the minimum fractal size */
 	private JTextField minEdgeSizeInput;
+	/** The JTextfield that holds input for the base shape edge length */
 	private JTextField maxEdgeSizeInput;
+	/** The JTextfield that holds input for the timer pause */
 	private JTextField timerPauseInput;
+	/** The JCheckBox that checks if the user wants the shape drawn */
 	private JCheckBox drawShape;
+	/** The JCheckBox that checks if the user wants the fractal drawn */
 	private JCheckBox drawFractal;
 	
 
+	/**
+	 * The InformationPanel constructor creates all the JLabels, JTextFields,
+	 * and JCheckboxes necessary for this program. It also adds the JButtons,
+	 * whose action listeners are in the RunMyFractal class. The components are
+	 * aligned using a box layout.
+	 * 
+	 * @param draw the JButton to draw the fractal
+	 * @param clear the JButton to clear the drawing panel
+	 */
 	public InformationPanel(JButton draw, JButton clear) {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		Color bgColor = new Color(220, 220, 220);
@@ -103,6 +126,11 @@ public class InformationPanel extends JPanel {
 	}
 	
 	
+	/**
+	 * Returns the input of the number of sides. Exceptions are handled.
+	 * 
+	 * @return The input of the number of sides
+	 */
 	public int getNumSides() {
 		try {
 			return Integer.parseInt(numSidesInput.getText());
@@ -112,6 +140,11 @@ public class InformationPanel extends JPanel {
 	}
 	
 	
+	/**
+	 * Returns the input of the minimum fractal size. Exceptions are handled.
+	 * 
+	 * @return The input of the minimum fractal size
+	 */
 	public int getMinEdgeSize() {
 		try {
 			return Integer.parseInt(minEdgeSizeInput.getText());
@@ -121,6 +154,11 @@ public class InformationPanel extends JPanel {
 	}
 	
 	
+	/**
+	 * Returns the input of the polygon edge size. Exceptions are handled.
+	 * 
+	 * @return The input of the polygon edge size
+	 */
 	public int getMaxEdgeSize() {
 		try {
 			return Integer.parseInt(maxEdgeSizeInput.getText());
@@ -130,6 +168,11 @@ public class InformationPanel extends JPanel {
 	}
 
 	
+	/**
+	 * Returns the input of the timer pause. Exceptions are handled.
+	 * 
+	 * @return The input of the timer pause
+	 */
 	public int getTimerPause() {
 		try {
 			return Integer.parseInt(timerPauseInput.getText());
@@ -139,14 +182,36 @@ public class InformationPanel extends JPanel {
 	}
 	
 	
+	/**
+	 * Returns whether the user wants the shape drawn.
+	 * 
+	 * @return whether the shape is drawn
+	 */
 	public boolean isShapeDrawn() {
 		return drawShape.isSelected();
 	}
 	
 	
+	/**
+	 * Returns whether the user wants the fractal drawn.
+	 * 
+	 * @return whether the fractal is drawn
+	 */
 	public boolean isFractalDrawn() {
 		return drawFractal.isSelected();
 	}
-	
+
+
+	/**
+	 * This is a simple toString that returns the field values for this class.
+	 * 
+	 * @return the field values for this class
+	 */
+	@Override
+	public String toString() {
+		return "InformationPanel [numSidesInput=" + numSidesInput + ", minEdgeSizeInput=" + minEdgeSizeInput
+				+ ", maxEdgeSizeInput=" + maxEdgeSizeInput + ", timerPauseInput=" + timerPauseInput + ", drawShape="
+				+ drawShape + ", drawFractal=" + drawFractal + "]";
+	}
 	
 }

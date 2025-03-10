@@ -2,21 +2,44 @@ package fractal;
 
 import java.util.ArrayList;
 
+/**
+ * The Fractal class establishes the coordinates for how to draw the fractal.
+ * This depends on the minimum size of the fractal sides, leading to a recursive
+ * use of the fractal drawingmethod.
+ * 
+ * @author Daniel Santillan
+ * @version 1.0
+ */
 public class Fractal {
 
+	/** The list of edges to draw the fractal on */
 	private ArrayList<Edge> edgesToHandle;
-	private ArrayList<Edge> edgesToDraw;
+	/** The minimum size of the fractal sides */
 	private int minSize;
-	private int maxSize;
 	
+	/**
+	 * The fractal constructor initializes the fields.
+	 * 
+	 * @param edgesInput the list of edges to handle
+	 * @param minSizeInput the minimum size of the fractal sides
+	 */
 	public Fractal(ArrayList<Edge> edgesInput, int minSizeInput) {
 		edgesToHandle = edgesInput;
-		edgesToDraw = new ArrayList<Edge>();
 		minSize = minSizeInput;
-		maxSize = edgesInput.get(0).getLength();
 	}
 	
 	
+	/**
+	 * The drawFractal method uses the list of edges to handle and the minimum
+	 * size to draw the fractal. Each fractal is built on a side of the base
+	 * polygon. It is made of two squares that are 2/5 the length of the base 
+	 * polygon side with an equilateral triangle in the middle. The top of the
+	 * squares are added to a list of edges to draw the next recursion of the
+	 * fractal on. The fractal is drawn using the location of the edges on the
+	 * coordinate plane of the frame along with the angle of the edge.
+	 * 
+	 * @return the list of edges that comprise the fractal
+	 */
 	public ArrayList<Edge> drawFractal() {
 		ArrayList<Edge> edgesDrawn = new ArrayList<Edge>();
 		ArrayList<Edge> newEdgesToDraw = new ArrayList<Edge>();
@@ -86,6 +109,17 @@ public class Fractal {
 		}
 		
 		return edgesDrawn;
+	}
+
+	
+	/**
+	 * This is a simple toString that returns the field values for this class.
+	 * 
+	 * @return the field values for this class
+	 */
+	@Override
+	public String toString() {
+		return "Fractal [edgesToHandle=" + edgesToHandle + ", minSize=" + minSize + "]";
 	}
 	
 }
